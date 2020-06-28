@@ -85,9 +85,38 @@ function Ackermann(m,n){
         return Ackermann(m-1,Ackermann(m,n-1));
     }
 }
+function quicksort(a){
+    let pivote=Math.floor(a.length/2);  
+    let leftArray=[];
+    let rightArray=[];
+    if(a.length>1){
+        a.forEach((element,index) =>{
+            if(element>a[pivote] && index!=pivote){
+                rightArray.push(element);
+            }else if(element<=a[pivote] && index!=pivote){
+                leftArray.push(element);
+            }
+        });
+        rightArray=quicksort(rightArray);
+        leftArray=quicksort(leftArray);
+        leftArray.push(a[pivote]);
+        if(rightArray.length){
+            leftArray.push(rightArray);
+        }
+        return leftArray;
+    }else{
+        return a
+    }
+}
 $(document).ready(
     ()=>{
         resultado=document.getElementById('resultado');
-        resultado.innerHTML=Ackermann(2,2);
+        prueba=document.getElementById('prueba');
+        let valorDePrueba=[];
+        for(let i=0;i<10000;i++){
+            valorDePrueba.push(Math.floor(Math.random()*10000));
+        }
+        prueba.innerHTML=valorDePrueba;
+        resultado.innerHTML=quicksort(valorDePrueba);
     }
 );
