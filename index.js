@@ -108,15 +108,46 @@ function quicksort(a){
         return a
     }
 }
+
+function minimumFountain(locations){
+    let n = locations.length;
+    let intevalArray = new Array(n).fill(0);
+    let count= 1;
+    locations.forEach((element,index)=>{
+        let left = Math.max((index+1)-element,1);
+        let right = Math.min((index+1)+element,n);
+        intevalArray[left-1] = Math.max(intevalArray[left-1],right);
+    });
+    let right = intevalArray[0];
+    let currentMax = intevalArray[0];
+    locations.forEach((element,index)=>{
+        currentMax = Math.max(currentMax,intevalArray[index]);
+        if(index == right){
+            count++;
+            right = currentMax;
+        }
+    });
+    return count;    
+}
+
 $(document).ready(
     ()=>{
         resultado=document.getElementById('resultado');
         prueba=document.getElementById('prueba');
-        let valorDePrueba=[];
-        for(let i=0;i<10000;i++){
-            valorDePrueba.push(Math.floor(Math.random()*10000));
-        }
+
+        let valorDePrueba1 = [0,0,0,3,0,0,2,0,0];  //2);
+        let valorDePrueba2 = [3,0,2,0,1,0];  //2);
+        let valorDePrueba3 = [3,0,1,0,1,0];  //2);
+        let valorDePrueba4 = [3,0,1,0,0,1];  //2);
+        let valorDePrueba5 = [2,0,2,0,1,0];  //2);
+        let valorDePrueba6 = [2,0,0,0,0];  //3);
+        let valorDePrueba7 = [0,0,0,0,0];  //5);
+        let valorDePrueba8 = [1,2,1];  //1);
+        let valorDePrueba9 = [0,1,0];  //1);
+        let valorDePrueba10 = [1,1,1];  //1);
+        let valorDePrueba = valorDePrueba8;
+
         prueba.innerHTML=valorDePrueba;
-        resultado.innerHTML=quicksort(valorDePrueba);
+        resultado.innerHTML=minimumFountain(valorDePrueba);
     }
 );
